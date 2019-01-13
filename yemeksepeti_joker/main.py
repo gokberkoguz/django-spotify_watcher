@@ -71,6 +71,8 @@ class JokerFinder:
             #time.sleep(self.time_to_wait)
             #self.change_page()
 JokerFinder()._run()
+
+#sadfsdaf
 """     
 try:
     driver = webdriver.Chrome('chromedriver\\chromedriver.exe')
