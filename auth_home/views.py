@@ -1,12 +1,5 @@
 from django.shortcuts import render
-import pprint
-import sys
 
-import spotipy
-import spotipy.util as util
-import json
-import requests
-from django.contrib.auth.models import User
 
 def home_page(request):
     if request.user.is_authenticated:

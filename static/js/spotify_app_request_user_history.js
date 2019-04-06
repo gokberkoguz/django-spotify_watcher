@@ -1,7 +1,7 @@
 
 
 user_id=document.currentScript.getAttribute('user_id')
-url="http://104.248.133.32/api/v1/admin_user_track_history/" + user_id
+url="http://127.0.0.1:8000/api/v1/admin_user_track_history/" + user_id
 
 //console.log(d.getDate())
 //console.log(d.getDate())

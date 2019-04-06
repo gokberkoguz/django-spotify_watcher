@@ -17,7 +17,7 @@ def get_songs():
         try:
             social = user_object.social_auth.get(provider='spotify')
             spotify_wrapper = SpotifyApi(social)
-            spotify_wrapper.get_currently_playing()
+            spotify_wrapper.get_user_currently_playing()
         except:
             pass
 
@@ -29,6 +29,6 @@ def get_user_recently_played():
         try:
             social = user_object.social_auth.get(provider='spotify')
             spotify_wrapper = SpotifyApi(social)
-            spotify_wrapper.get_user_recently_played()
+            spotify_wrapper.user_track_history()
         except:
             pass

@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer, user_track_history_serializer,online_user_live_listenings_serializer
-from spotify_app.models import user_tracks_history
+from .serializers import UserSerializer, GroupSerializer,online_user_live_listenings_serializer,track_serializer,user_history
+from spotify_app.models import currently_playing_object,track_object , user_track_history as spotify_user_track_history
 from datetime import timedelta, datetime as dt
+from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
@@ -21,36 +22,48 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+#
+# class admin_user_track_history(viewsets.ModelViewSet):
+#     #permission_classes = (permissions.IsAdminUser,)
+#     #authentication_classes = (SessionAuthentication, BasicAuthentication)
+#     serializer_class = user_track_history_serializer
+#
+#     def get_queryset(self):
+#         user_id = self.kwargs['user_id']
+#         return user_tracks_history.objects.filter(user_id= user_id,
+#                                                   timestamp__range=(dt.now() - timedelta(days=30), dt.now()))
+
 class user_track_history(viewsets.ModelViewSet):
-
-    serializer_class = user_track_history_serializer
-
-    def get_queryset(self):
-        """
-        Returns the last 30 days user track history for requested user
-        Dev notes=Timedelta might be changed from interface or settings.py
-        """
-        user = self.request.user
-        return user_tracks_history.objects.filter(user_id=user.id,
-                                                  timestamp__range=(dt.now()-timedelta(days=30), dt.now()))
-
-
-class admin_user_track_history(viewsets.ModelViewSet):
     #permission_classes = (permissions.IsAdminUser,)
-    #authentication_classes = (SessionAuthentication, BasicAuthentication)
-    serializer_class = user_track_history_serializer
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    serializer_class = user_history
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return user_tracks_history.objects.filter(user_id= user_id,
-                                                  timestamp__range=(dt.now() - timedelta(days=30), dt.now()))
+        return spotify_user_track_history.objects.filter(user_id=User.objects.get(id= user_id).username).order_by('played_at')
 
-###i added timeslot -3 since dt now gives current timezone
-class online_user_live_listenings(viewsets.ModelViewSet):
+
+class tracks(viewsets.ModelViewSet):
+
+    serializer_class = track_serializer
+
+    def get_queryset(self):
+        return track_object.objects.all()
+
+
+
+class online_user_live_listenings(viewsets.ViewSet):
     #permission_classes = (permissions.IsAdminUser,)
     #authentication_classes = (SessionAuthentication, BasicAuthentication)
     serializer_class = online_user_live_listenings_serializer
 
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = online_user_live_listenings_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def get_queryset(self):
-        return user_tracks_history.objects.order_by('user_id', '-timestamp').distinct('user_id').filter(timestamp__gte= (dt.now()-timedelta(hours=3)) - timedelta(seconds=60 * 5))
+         return currently_playing_object.objects.raw("""SELECT sp.id,sp.timestamp,e.name,e.uri FROM spotify_app_currently_playing_object AS sp
+                 LEFT JOIN spotify_app_track_object as e on sp.track = e.id
+                 WHERE is_playing=TRUE""")
 

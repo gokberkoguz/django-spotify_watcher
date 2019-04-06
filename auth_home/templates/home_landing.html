@@ -13,7 +13,8 @@
             <h1 class="masthead-heading mb-0">Welcome to My site</h1>
             <a href="{% url 'spotify_app:weekly_chart' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Check your weekly chart</a>
             <a href="{% url 'spotify_app:recommended_songs' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Check your recommended songs</a>
-
+            <a href="{% url 'spotify_app:user_history'  %}" class="btn btn-primary btn-xl rounded-pill mt-5">History</a>
+            <a href="{% url 'spotify_app:lyrics' track='11' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Your History</a>
           {% else %}
 
           <h1 class="masthead-heading mb-0">Welcome to My site</h1>

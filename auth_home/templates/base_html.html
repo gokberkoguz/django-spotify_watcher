@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>One Page Wonder - Start Bootstrap Template</title>
+    <title>Spotimatch</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -37,16 +37,15 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <!--
+
           <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="#">Sign Up</a>
+              <a class="nav-link" href="#">Log Out</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Log In</a>
-            </li>
+              {% endif %}
           </ul>
-          -->
+
         </div>
       </div>
     </nav>

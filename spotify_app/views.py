@@ -1,21 +1,13 @@
 from django.shortcuts import render
-import pprint
-import sys
-
-import spotipy
-import spotipy.util as util
-import json
-import requests
 from django.contrib.auth.models import User
 from spotify_app import spotify_api
-
+import requests
 
 def weekly_chart(request):
     if request.user.is_authenticated:
         print('USER ACCESS')
         print(request.user)
     else:
-        print('USER CANT ACCESS')
         print(request.user)
     return render(request, 'weekly_chart.html')
 
@@ -24,15 +16,17 @@ def recommended_songs(request):
 
 
     users = User.objects.all()
-    print(users)
     for user_object in users:
-        try:
-            #print(user_object)
-            social = user_object.social_auth.get(provider='spotify')
-            spotify_wrapper = spotify_api.SpotifyApi(social)
-            spotify_wrapper.get_user_recently_played()
-        except Exception as e:
-            print(str(e) + str(user_object.id))
+        if user_object.username!='mgokberk':
+
+                social = user_object.social_auth.get(provider='spotify')
+                refresh = spotify_api.SpotifyRefreshUsers()
+
+                refresh.refresh_token()
+                spotify_wrapper = spotify_api.SpotifyApi(social)
+                lines = spotify_wrapper.user_track_history()
+                print(lines,'test')
+                #spotify_wrapper.next_track()
 
 
     #user = User.objects.get(username='enivecivokke')
@@ -54,4 +48,26 @@ def recommended_songs(request):
     token=social.extra_data['access_token']
     '''
 
-    return render(request, 'recommended_songs.html')
+    return render(request, 'recommended_songs.html', {'lyrics':lines})
+
+def stream(request,user_id):
+    user = User.objects.get(id= user_id)
+    social_user = user.social_auth.get(provider='spotify')
+    token = social_user.extra_data['access_token']
+    spotify_wrapper = spotify_api.SpotifyApi(social_user)
+    spotify_wrapper.get_user_currently_playing()
+    return render(request, 'spotify_player.html',{'access_token':token})
+
+def lyrics_track(request,track_id,artist_id):
+
+    user = User.objects.get(id=request.user.id)
+    social_user = user.social_auth.get(provider='spotify')
+    token = social_user.extra_data['access_token']
+    spotify_wrapper = spotify_api.SpotifyApi(social_user)
+    lyrics = spotify_wrapper.prepare_track(track_id,artist_id)
+    return render(request, 'lyrics.html', {'lyrics': lyrics})
+
+def user_history(request):
+    r = requests.get("http://127.0.0.1:8000/api/v1/user_history/" + str(request.user.id))
+
+    return render(request, 'history.html', {'tracks': r.json()['results']})

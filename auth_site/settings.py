@@ -26,14 +26,13 @@ SECRET_KEY = '2)=t3jyd=vzjx6jr+h%f2_q3ntr7p_!e!lx(qb&@c#yj9la)z5'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'104.248.133.32',
 '127.0.0.1',
 ]
 
 #Celery ADD-ONS
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'db+postgresql://mgokberk:02122791245a@localhost/spotify_db'
+CELERY_RESULT_BACKEND = 'db+postgresql://postgres:159753@localhost/postgres'
 
 
 # Application definition
@@ -118,10 +117,10 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'spotify_db',
-        'USER': 'mgokberk',
-        'PASSWORD': '02122791245a',
-        'HOST': '104.248.133.32',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '159753',
+        'HOST': 'localhost',
         'PORT': '',
     }
 
@@ -161,6 +160,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Serializer
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

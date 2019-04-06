@@ -1,0 +1,45 @@
+{% extends 'base_html.html' %}
+{% load static %}
+
+
+    {% block content %}
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          {% if user.is_authenticated %}
+            <h1 class="masthead-heading mb-0">Lyrics</h1>
+            {% for track in tracks%}
+            <a href = "{% url 'spotify_app:lyrics' track.id track.artist.0 %}">{{ track.name }}</a><br>
+            {% endfor %}
+            <!--<button style="height: 450px;width: 450px;" class="button button5">ALEYNA TİLKİLE</button>-->
+          {% else %}
+          <h1 class="masthead-heading mb-0">Welcome to My site</h1>
+          <h2 class="masthead-subheading mb-0">lorem ipsum test aufwidersehen einshuldigung</h2>
+          <a href="/login" class="btn btn-primary btn-xl rounded-pill mt-5">Connect with spotfiy to continue</a>
+          {% endif %}
+
+        </div>
+      </div>
+      <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+      <div class="bg-circle-4 bg-circle"></div>
+    </header>
+
+<style>
+    .button {
+  background-color: #ff0003;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 100px;
+  margin: 4px 2px;
+}
+    .button5 {border-radius: 50%;}
+</style>
+    {% endblock %}
+
+

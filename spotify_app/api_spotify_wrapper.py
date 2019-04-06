@@ -338,7 +338,7 @@ class Spotify(object):
         """
         return self._get("me/playlists", limit=limit, offset=offset)
 
-    def user_playlists(self, user, limit=50, offset=0):
+    def user_playlist(self, user, limit=50, offset=0):
         """ Gets playlists of a user
             Parameters:
                 - user - the id of the usr
@@ -348,7 +348,7 @@ class Spotify(object):
         return self._get("users/%s/playlists" % user, limit=limit,
                          offset=offset)
 
-    def user_playlist(self, user, playlist_id=None, fields=None):
+    def user_playlists(self, user, playlist_id=None, fields=None):
         """ Gets playlist of a user
             Parameters:
                 - user - the id of the user

@@ -1,4 +1,4 @@
-url="http://104.248.133.32/api/v1/online_user_live_listenings/"
+url="http://127.0.0.1:8000/api/v1/online_user_live_listenings/"
 const app = document.getElementById('currently_listening');
 const container = document.createElement('ul');
 container.setAttribute('style', 'width:200px;display:inline');
