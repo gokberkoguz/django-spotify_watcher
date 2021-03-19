@@ -20,7 +20,7 @@ django-oauth-toolkit==1.2.0
 django-rq==1.2.0
 django-tables2==1.21.2
 django-timezone-field==3.0
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 dnspython==1.15.0
 drf-extensions==0.4.0
 eventlet==0.24.1
