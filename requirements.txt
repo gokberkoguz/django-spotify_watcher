@@ -23,7 +23,7 @@ django-timezone-field==3.0
 djangorestframework==3.8.2
 dnspython==1.15.0
 drf-extensions==0.4.0
-eventlet==0.24.1
+eventlet==0.31.0
 ffmpeg==1.2.1
 Flask==1.0.2
 Flask-OAuthlib==0.9.5
