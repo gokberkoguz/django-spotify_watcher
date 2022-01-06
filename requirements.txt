@@ -5,7 +5,7 @@ attrs==18.2.0
 beautifulsoup4==4.6.0
 billiard==3.5.0.4
 cached-property==1.5.1
-celery==4.2.1
+celery==5.2.2
 certifi==2018.4.16
 chardet==3.0.4
 Click==7.0
