@@ -83,7 +83,7 @@ try:
     username_field.send_keys('mgokberkoguz1@gmail.com')
     password_field=driver.find_element_by_id('password')
     password_field.click()
-    password_field.send_keys('159753')
+    password_field.send_keys('')
     driver.find_element_by_id('ys-fastlogin-button').click()
     time.sleep(5)
 except:
