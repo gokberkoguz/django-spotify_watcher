@@ -69,7 +69,7 @@ six==1.11.0
 sklearn==0.0
 social-auth-app-django==3.1.0
 social-auth-core==2.0.0
-spotipy==2.4.4
+spotipy==2.22.1
 SQLAlchemy==1.2.10
 urllib3==1.22
 vine==1.1.4
